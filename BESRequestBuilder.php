@@ -1,8 +1,8 @@
-<?php
-include_once( "ShowCommand.php" ) ;
-include_once( "SetCommand.php" ) ;
-include_once( "DefineCommand.php" ) ;
-include_once( "GetCommand.php" ) ;
+<?
+include_once "ShowCommand.php" ;
+include_once "SetCommand.php" ;
+include_once "DefineCommand.php" ;
+include_once "GetCommand.php" ;
 
 function parseRequests( $requests, &$requestlist )
 {

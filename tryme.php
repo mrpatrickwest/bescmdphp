@@ -1,6 +1,6 @@
 <?php
 
-include_once( "BESRequestBuilder.php" ) ;
+include_once "BESRequestBuilder.php" ;
 
 //$cmd = "show version;" ;
 //$cmd = "set context var to val;" ;

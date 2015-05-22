@@ -1,5 +1,5 @@
 <?php
-include_once( "BESCommand.php" ) ;
+include_once "BESCommand.php" ;
 
 global $handlers ;
 
