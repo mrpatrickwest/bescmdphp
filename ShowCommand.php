@@ -12,6 +12,9 @@ class ShowCommand extends BESCommand
 
     public function buildXML()
     {
+	global $responseType ;
+	$responseType = "xml" ;
+
         $arr = explode( " ", $this->cmd ) ;
         if( count( $arr ) != 2 )
         {

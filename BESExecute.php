@@ -14,11 +14,28 @@ include_once( "pptphpapi/PPTClient.php" ) ;
  */
 function executeCommand( $host, $port, $cmd, $repeat, $outDescript )
 {
+    global $httpHeader, $responseType ;
+
     $xml = "" ;
 
     $result = getRequestDocument( $cmd, $xml ) ;
     if( $result == null )
     {
+	if( $httpHeader == true )
+	{
+	    switch( $responseType )
+	    {
+	        case "xml":
+		    header('Content-Type: application/xml; charset=utf-8');
+		    break ;
+		case "html":
+		    header('Content-Type: text/html');
+		    break ;
+		case "txt":
+		    header('Content-Type: text/plain');
+		    break ;
+	    }
+	}
         $result = executeXMLCommand( $host, $port, $xml, $repeat, $outDescript);
     }
 
@@ -108,7 +125,14 @@ function executeXMLCommandOnce( $client, $xml, $outDescript )
             }
             else
             {
-                fprintf( $outDescript, "$data" ) ;
+		if( $outDescript != null )
+		{
+		    fprintf( $outDescript, "$data" ) ;
+		}
+		else
+		{
+		    print( "$data" ) ;
+		}
             }
         }
     }

@@ -12,6 +12,8 @@ class GetCommand extends BESCommand
 
     public function buildXML()
     {
+	global $responseType ;
+
         // get dods for d return as ascii
         $arr = explode( " ", $this->cmd ) ;
         if( count( $arr ) != 4 && count( $arr ) != 7 )
@@ -36,6 +38,32 @@ class GetCommand extends BESCommand
         {
             $this->xml .= "/>" ;
         }
+
+	switch( $arr[1] )
+	{
+	    case "ddx":
+	        $responseType = "xml" ;
+		break ;
+	    case "dods":
+	        $responseType = "bin" ;
+		break ;
+	    default:
+	        $responseType = "txt" ;
+		break ;
+	}
+	if( isset( $arr[6] ) )
+	{
+	    switch( $arr[6] )
+	    {
+	        case "ascii":
+		case "info":
+		case "tab":
+		case "flat":
+		    $responseType = "txt" ;
+		    break ;
+	    }
+	}
+
         return null ;
     }
 }
