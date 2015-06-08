@@ -1,5 +1,6 @@
 <?php
 
+include_once( "BESRequestBuilder.php" ) ;
 include_once( "pptphpapi/PPTClient.php" ) ;
 
 /** Function that takes a string command, translates to XML then executes

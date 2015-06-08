@@ -1,5 +1,10 @@
 <?php
 
+if( isset( $_SERVER ) )
+{
+    exit 0 ;
+}
+
 include_once "BESRequestBuilder.php" ;
 include_once "BESExecute.php" ;
 include_once "pptphpapi/PPTClient.php" ;
