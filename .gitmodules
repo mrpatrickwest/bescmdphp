@@ -1,0 +1,3 @@
+[submodule "pptphpapi"]
+	path = pptphpapi
+	url = https://github.com/mrpatrickwest/pptphpapi
