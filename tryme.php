@@ -9,7 +9,8 @@ include_once "BESRequestBuilder.php" ;
 //$cmd = "set container in catalog values c,fnoc1.nc,nc;" ;
 //$cmd = "define d as mfp920504a;" ;
 //$cmd = "get das for d;" ;
-$cmd = "define d as c with c.constraint=\"x;y;z\";get dods for d return as ascii;" ;
+$cmd = "define d as c1,c2 with c1.constraint=\"x,y,z\",c2.constraint=\"a,b,c\";get dods for d return as ascii;" ;
+//$cmd = "define d as c with c.constraint=\"x,y,z\";get dods for d return as ascii;" ;
 
 $xml = "" ;
 

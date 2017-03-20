@@ -36,26 +36,52 @@ class DefineCommand extends BESCommand
             {
                 return "malformed command $this->cmd" ;
             }
-            $constraintsStr = $arr[5] ;
-            $constraintsFull = explode( ",", $constraintsStr ) ;
-            for( $c = 0; $c < count( $constraintsFull ); $c++ )
-            {
-                $keyValue = explode( ".", $constraintsFull[$c] ) ;
-                if( count( $keyValue ) != 2 )
-                {
-                    return "malformed command $this->cmd" ;
+            $constraintsStr = $arr[5];
+            $inQuotes = false;
+            $done = false;
+            $constraint = "";
+            $constraintList = array();
+            for($i = 0; $i < strlen($constraintsStr) && !$done; $i++) {
+                $constraint .= $constraintsStr[$i];
+                if($constraintsStr[$i] == '"') {
+                    if(!$inQuotes) {
+                        $inQuotes = true;
+                    } else if($i == strlen($constraintsStr) - 1 || $constraintsStr[$i + 1] == ',' || $constraintsStr[$i + 1] == ';') {
+                        array_push($constraintList, $constraint);
+                        $constraint = "";
+                        $inQuotes = false;
+                        $i++;
+                    } else {
+                        return "Unbalanced quotes in $this->cmd";
+                        $done = true;;
+                    }
                 }
-                if( !in_array( $keyValue[0], $containers ) )
-                {
-                    return "no container for constraint, malformed command $this->cmd" ;
+            }
+            $constraints = null;
+            for($i = 0; $i < sizeof($constraintList); $i++) {
+                $constraint = $constraintList[$i];
+                $dot = strpos($constraint, '.');
+                if(!$dot) {
+                    return "missing dot in $this->cmd";
+                    break;
                 }
-                $keyValueArray = explode( "=", $keyValue[1] ) ;
-                if( count( $keyValueArray ) != 2 )
-                {
-                    return "malformed command $this->cmd" ;
+                $containerName = substr($constraint, 0, $dot);
+                $equal = strpos($constraint, '=', $i);
+                if(!$dot) {
+                    return "missing equal in $this->cmd";
+                    break;
                 }
-                $value = str_replace( "\"", "", $keyValueArray[1] ) ;
-                $constraints[$keyValue[0]] = $value ;
+                if(!in_array($containerName, $containers)) {
+                    return "no container named $containerName in $this->cmd";
+                    break;
+                }
+                $constraintStr = substr($constraint, $dot+1, $equal-$dot-1);
+                if($constraintStr != "constraint") {
+                    return "should say \"constraint\" after container name in $this->cmd";
+                    break;
+                }
+                $theConstraint = substr($constraint, $equal+2, strlen($constraint)-$equal-3);
+                $constraints[$containerName] = $theConstraint;
             }
         }
         $this->xml = "<define name=\"" . $arr[1] . "\">" ;

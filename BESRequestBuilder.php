@@ -1,4 +1,4 @@
-<?
+<?php
 include_once "ShowCommand.php" ;
 include_once "SetCommand.php" ;
 include_once "DefineCommand.php" ;
@@ -43,6 +43,7 @@ function parseCmd( $cmd, &$requests )
     $cmdarr = str_split( $cmd ) ;
     $isquote = false ;
     $start = 0 ;
+    $request = "";
     for( $c = 0; $c < count( $cmdarr ); $c++ )
     {
         if( $cmdarr[$c] == "\"" )
