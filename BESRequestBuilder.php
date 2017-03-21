@@ -43,6 +43,7 @@ function parseCmd( $cmd, &$requests )
     $cmdarr = str_split( $cmd ) ;
     $isquote = false ;
     $start = 0 ;
+    $request = "";
     $request = "" ;
     for( $c = 0; $c < count( $cmdarr ); $c++ )
     {
